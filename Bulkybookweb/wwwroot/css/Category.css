@@ -1,0 +1,121 @@
+﻿
+.category-card {
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    margin-top: 20px;
+}
+
+.category-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+    .category-table th,
+    .category-table td {
+        text-align: center;
+        padding: 12px 15px;
+    }
+
+    .category-table thead {
+        background-color: #f1f1f1;
+    }
+
+    .category-table tbody tr:hover {
+        background-color: #f8f9fa;
+        transition: background-color 0.2s ease-in-out;
+    }
+
+    .category-table .badge {
+        font-size: 0.85rem;
+    }
+
+.category-form .form-label {
+    font-weight: 600;
+}
+
+.category-form input {
+    border-radius: 8px;
+}
+
+.category-form button {
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+.category-btn-create {
+    background-color: #ffc107;
+    border: none;
+    color: #fff;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+    .category-btn-create:hover {
+        background-color: #e0a800;
+    }
+
+.category-btn-back {
+    background-color: #6c757d;
+    border: none;
+    color: #fff;
+    transition: 0.3s;
+}
+
+    .category-btn-back:hover {
+        background-color: #5a6268;
+    }
+
+.category-btn-edit {
+    background-color: #0d6efd;
+    color: #fff;
+    font-weight: 600;
+    padding: 5px 16px;
+    border: none;
+    border-radius: 50px; 
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+    transition: 0.3s;
+}
+
+    .category-btn-edit:hover {
+        background-color: #0b5ed7;
+        transform: translateY(-2px); 
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    }
+
+.category-btn-delete {
+    background-color: #dc3545;
+    color: #fff;
+    font-weight: 600;
+    padding: 5px 16px;
+    border: none;
+    border-radius: 50px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+    transition: 0.3s;
+}
+
+    .category-btn-delete:hover {
+        background-color: #b02a37;
+        transform: translateY(-2px); 
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    }
+.transition {
+    transition: all 0.3s ease;
+}
+
+.btn-outline-secondary.transition:hover {
+    background-color: #6c757d;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.btn-danger.transition:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.card.shadow-lg:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+}

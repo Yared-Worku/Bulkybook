@@ -1,0 +1,87 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - BulkyBook</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/category.css" asp-append-version="true" />
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+    <nav class="navbar navbar-expand-lg navbar-dark shadow">
+        <div class="container">
+            <a class="navbar-brand me-4" asp-controller="Home" asp-action="Index">
+                📚 BulkyBook
+            </a>
+            <button class="navbar-toggler" type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#mainNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="mainNavbar">
+                <ul class="navbar-nav me-auto">
+
+                  @*   <li class="nav-item">
+                        <a class="nav-link px-3" asp-controller="Home" asp-action="Index">
+                            🏠 Home
+                        </a>
+                    </li> *@
+
+                    <li class="nav-item">
+                        <a class="nav-link px-3" asp-controller="Category" asp-action="Index">
+                            📂 Categories
+                        </a>
+                    </li>
+
+                </ul>
+                <form class="d-flex" role="search">
+                    <input class="form-control form-control-sm me-2 rounded-pill"
+                           type="search"
+                           placeholder="Search..."
+                           aria-label="Search">
+                    <button class="btn btn-warning btn-sm rounded-pill px-3"
+                            type="submit">
+                        Search
+                    </button>
+                </form>
+
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-fill">
+        <div class="container mt-4">
+            <div class="main-container">
+                <partial name="_Notification" />
+                @RenderBody()
+            </div>
+        </div>
+    </main>
+
+    <footer class="text-center mt-auto">
+        <div class="container py-3">
+            © 2026 BulkyBook |
+            <a asp-controller="Home" asp-action="Privacy">Privacy Policy</a>
+        </div>
+    </footer>
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script>
+        toastr.options = {
+            "closeButton": true,
+            "progressBar": true,
+            "positionClass": "toast-top-right",
+            "timeOut": "4000"
+        };
+    </script>
+    @await RenderSectionAsync("Scripts", required: false)
+    
+</body>
+</html>
