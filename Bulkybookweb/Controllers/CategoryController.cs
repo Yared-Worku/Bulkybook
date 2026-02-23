@@ -285,7 +285,7 @@ namespace Bulkybookweb.Controllers
 
             if (ModelState.IsValid)
             {
-                obj.CreatedDateTime = DateTime.Now;
+                obj.CreatedDateTime = DateTime.UtcNow;
                 _context.Categories.Add(obj);
                 _context.SaveChanges();
                 TempData["success"] = "Category created successfully";
