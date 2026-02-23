@@ -43,17 +43,24 @@
     border-radius: 8px;
     font-weight: 600;
 }
-
 .category-btn-create {
-    background-color: #ffc107;
-    border: none;
-    color: #fff;
-    font-weight: 600;
-    transition: 0.3s;
+    background-color: #ffc107 !important; /* Bright Yellow */
+    color: #212529 !important; /* Dark text for contrast */
+    border: none !important;
+    font-weight: 700 !important;
+    padding: 8px 16px !important; /* Ensure it has size */
+    border-radius: 8px !important;
+    text-decoration: none;
+    display: inline-flex; /* Helps with vertical alignment */
+    align-items: center;
+    transition: 0.3s all ease;
 }
 
     .category-btn-create:hover {
-        background-color: #e0a800;
+        background-color: #e0a800 !important;
+        color: #000 !important;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     }
 
 .category-btn-back {
