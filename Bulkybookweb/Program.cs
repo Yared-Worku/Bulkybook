@@ -1,13 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Bulkybookweb.Models;
+﻿using Bulkybookweb.Models;
+using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-// 👇 Add SQLite DbContext
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlite(builder.Configuration.GetConnectionString("BULKY_DB")));
-
+    options.UseNpgsql(builder.Configuration.GetConnectionString("BULKY_DB")));
 
 var app = builder.Build();
 
