@@ -459,23 +459,33 @@ nav[aria-label="User navigation"] {
     }
 
     .main-content {
-        width: 100% !important;
+        margin-left: 0 !important;
         padding: 10px !important;
+        width: 100% !important;
     }
 
     .category-card, .auth-card {
-        max-width: 95% !important;
-        margin: 10px auto !important;
+        max-width: 100% !important;
+        width: 100% !important;
+        margin: 0 !important;
         padding: 15px !important;
+        border-radius: 8px; 
     }
-
+    .category-table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
     .d-flex {
         flex-direction: column !important;
-        gap: 10px;
+        gap: 8px;
     }
 
-    .category-btn-back, .category-btn-create, .btn-auth {
+.category-btn-back, .category-btn-create, .btn-auth {
         width: 100% !important;
-        justify-content: center;
+    }
+    #sidebar.active {
+        left: 0;
+        box-shadow: 5px 0 15px rgba(0,0,0,0.5);
     }
 }

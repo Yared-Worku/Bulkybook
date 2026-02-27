@@ -29,7 +29,7 @@
 
             <a class="navbar-brand me-auto" asp-controller="Home" asp-action="Index">
                 <i class="bi bi-book-half me-2"></i> Book Shelf
-            </a>
+           </a>
 
             @if (User.Identity.IsAuthenticated)
             {
@@ -139,6 +139,17 @@
                 }
             });
         }
+                $(document).ready(function () {
+            $('#sidebarToggle').on('click', function () {
+                $('#sidebar').toggleClass('active');
+            });
+
+            $('.main-content').on('click', function () {
+                if ($('#sidebar').hasClass('active')) {
+                    $('#sidebar').removeClass('active');
+                }
+            });
+        });
     </script>
 
     @await RenderSectionAsync("Scripts", required: false)
