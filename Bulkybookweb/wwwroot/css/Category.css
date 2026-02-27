@@ -455,10 +455,6 @@ nav[aria-label="User navigation"] {
         width: 65px; 
     }
 
-    .sidebar-text {
-        display: none;
-    }
-
     .auth-card {
         margin: 10px;
         max-width: 100%;
@@ -467,5 +463,6 @@ nav[aria-label="User navigation"] {
     .category-table {
         display: block;
         overflow-x: auto; 
+        max-width: 100%;
     }
 }
