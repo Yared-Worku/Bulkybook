@@ -21,19 +21,35 @@ builder.Services.AddControllersWithViews(options =>
     
     options.Filters.Add(new AuthorizeFilter(policy));
 });
+//builder.Services.AddDbContext<ApplicationDbContext>(options =>
+//{
+//    //if (builder.Environment.IsDevelopment())
+//    //{
+//    //    // SQL Server for local dev
+//    //    options.UseSqlServer(builder.Configuration.GetConnectionString("BULKY_DB"));
+//    //}
+//    //else
+//    //{
+//        // Postgres for Render
+//        var connUrl = Environment.GetEnvironmentVariable("BULKY_DB");
+//        options.UseNpgsql(connUrl);
+//    //}
+//});
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
-    //if (builder.Environment.IsDevelopment())
-    //{
-    //    // SQL Server for local dev
-    //    options.UseSqlServer(builder.Configuration.GetConnectionString("BULKY_DB"));
-    //}
-    //else
-    //{
-        // Postgres for Render
-        var connUrl = Environment.GetEnvironmentVariable("BULKY_DB");
-        options.UseNpgsql(connUrl);
-    //}
+    var connUrl = builder.Configuration.GetConnectionString("BULKY_DB");
+
+    if (string.IsNullOrEmpty(connUrl))
+    {
+        throw new InvalidOperationException("Connection string 'BULKY_DB' was not found.");
+    }
+
+    if (!connUrl.Contains("SSL Mode"))
+    {
+        connUrl += ";SSL Mode=Require;Trust Server Certificate=true;";
+    }
+
+    options.UseNpgsql(connUrl);
 });
 builder.Services.AddIdentity<Users, Roles>(options =>
 {
