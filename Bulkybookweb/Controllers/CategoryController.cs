@@ -1,258 +1,12 @@
-﻿//using Bulkybookweb.Models;
-//using Microsoft.AspNetCore.Mvc;
-//using Microsoft.Data.SqlClient;
-//using System.Data;
-
-//namespace Bulkybookweb.Controllers
-//{
-//    public class CategoryController : Controller
-//    {
-//        private readonly IConfiguration _config;
-
-//        public CategoryController(IConfiguration config)
-//        {
-//            _config = config;
-//        }
-
-//        public IActionResult Index()
-//        {
-//            string connStr = _config.GetConnectionString("BULKY_DB");
-
-//            var categories = new List<Category>();
-
-//            using SqlConnection conn = new SqlConnection(connStr);
-//            using SqlCommand cmd = new SqlCommand("proc_GetCategories", conn)
-//            {
-//                CommandType = CommandType.StoredProcedure
-//            };
-
-//            try
-//            {
-//                conn.Open();
-//                using SqlDataReader reader = cmd.ExecuteReader();
-//                while (reader.Read())
-//                {
-//                    categories.Add(new Category
-//                    {
-//                        Id = (int)reader["Id"],
-//                        Name = reader["Name"].ToString(),
-//                        DisplayOrder = (int)reader["DisplayOrder"],
-//                        CreatedDateTime = (DateTime)reader["CreatedDateTime"]
-//                    });
-//                }
-
-//                return View(categories);
-//            }
-//            catch (Exception ex)
-//            {
-//                return Content("Error: " + ex.Message);
-//            }
-//        }
-
-//        [HttpGet]
-//        public IActionResult Create()
-//        {
-//            return View();
-//        }
-
-//        [HttpPost]
-//        [ValidateAntiForgeryToken]
-//        public IActionResult Create(Category obj)
-//        {
-//            if(obj.Name == obj.DisplayOrder.ToString())
-//            {
-//                ModelState.AddModelError("Name", "The display order cannot exactly match name.");
-//            }
-//            if (ModelState.IsValid)
-//            {
-//                string connStr = _config.GetConnectionString("BULKY_DB");
-
-//                try
-//                {
-//                    using SqlConnection conn = new SqlConnection(connStr);
-//                    using SqlCommand cmd = new SqlCommand("proc_InsertCategory", conn)
-//                    {
-//                        CommandType = CommandType.StoredProcedure
-//                    };
-
-//                    cmd.Parameters.Add("@Name", SqlDbType.NVarChar, 100).Value = obj.Name;
-//                    cmd.Parameters.Add("@DisplayOrder", SqlDbType.Int).Value = obj.DisplayOrder;
-//                    cmd.Parameters.Add("@CreatedDateTime", SqlDbType.DateTime).Value = obj.CreatedDateTime;
-
-//                    conn.Open();
-//                    cmd.ExecuteNonQuery();
-//                    TempData["success"] = "category created successfully";
-//                    return RedirectToAction("Index");
-//                }
-//                catch (SqlException ex)
-//                {
-//                    TempData["error"] = "Faild to create category!";
-//                    return Content("Database Error: " + ex.Message);
-//                }
-//            }
-
-//            return View(obj);
-//        }
-//        [HttpGet]
-//        public IActionResult Edit(int? id)
-//        {
-//            if (id == null || id == 0)
-//                return NotFound();
-
-//            string connStr = _config.GetConnectionString("BULKY_DB");
-//            Category category = null;
-
-//            try
-//            {
-//                using SqlConnection conn = new SqlConnection(connStr);
-//                using SqlCommand cmd = new SqlCommand("proc_GetCategoryById", conn)
-//                {
-//                    CommandType = CommandType.StoredProcedure
-//                };
-
-//                cmd.Parameters.Add("@Id", SqlDbType.Int).Value = id;
-
-//                conn.Open();
-//                using SqlDataReader reader = cmd.ExecuteReader();
-//                if (reader.Read())
-//                {
-//                    category = new Category
-//                    {
-//                        Id = (int)reader["Id"],
-//                        Name = reader["Name"].ToString(),
-//                        DisplayOrder = (int)reader["DisplayOrder"],
-//                        CreatedDateTime = (DateTime)reader["CreatedDateTime"]
-//                    };
-//                }
-//            }
-//            catch (SqlException ex)
-//            {
-//                return Content("Database Error: " + ex.Message);
-//            }
-
-//            if (category == null)
-//                return NotFound();
-
-//            return View(category);
-//        }
-//        [HttpPost]
-//        [ValidateAntiForgeryToken]
-//        public IActionResult Edit(Category obj)
-//        {
-//            if (obj.Name == obj.DisplayOrder.ToString())
-//            {
-//                ModelState.AddModelError("Name", "The display order cannot exactly match name.");
-//            }
-
-//            if (ModelState.IsValid)
-//            {
-//                string connStr = _config.GetConnectionString("BULKY_DB");
-
-//                try
-//                {
-//                    using SqlConnection conn = new SqlConnection(connStr);
-//                    using SqlCommand cmd = new SqlCommand("proc_UpdateCategory", conn)
-//                    {
-//                        CommandType = CommandType.StoredProcedure
-//                    };
-
-//                    cmd.Parameters.Add("@Id", SqlDbType.Int).Value = obj.Id;
-//                    cmd.Parameters.Add("@Name", SqlDbType.NVarChar, 100).Value = obj.Name;
-//                    cmd.Parameters.Add("@DisplayOrder", SqlDbType.Int).Value = obj.DisplayOrder;
-
-//                    conn.Open();
-//                    cmd.ExecuteNonQuery();
-//                    TempData["success"] = "category updated successfully";
-//                    return RedirectToAction("Index");
-//                }
-//                catch (SqlException ex)
-//                {
-//                    TempData["error"] = "Faild to update category!";
-//                    return Content("Database Error: " + ex.Message);
-//                }
-//            }
-
-//            return View(obj);
-//        }
-//        [HttpGet]
-//        public IActionResult Delete(int? id)
-//        {
-//            if (id == null || id == 0)
-//                return NotFound();
-
-//            string connStr = _config.GetConnectionString("BULKY_DB");
-//            Category category = null;
-
-//            try
-//            {
-//                using SqlConnection conn = new SqlConnection(connStr);
-//                using SqlCommand cmd = new SqlCommand("proc_GetCategoryById", conn)
-//                {
-//                    CommandType = CommandType.StoredProcedure
-//                };
-
-//                cmd.Parameters.Add("@Id", SqlDbType.Int).Value = id;
-
-//                conn.Open();
-//                using SqlDataReader reader = cmd.ExecuteReader();
-//                if (reader.Read())
-//                {
-//                    category = new Category
-//                    {
-//                        Id = (int)reader["Id"],
-//                        Name = reader["Name"].ToString(),
-//                        DisplayOrder = (int)reader["DisplayOrder"],
-//                        CreatedDateTime = (DateTime)reader["CreatedDateTime"]
-//                    };
-//                }
-//            }
-//            catch (SqlException ex)
-//            {
-//                return Content("Database Error: " + ex.Message);
-//            }
-
-//            if (category == null)
-//                return NotFound();
-
-//            return View(category);
-//        }
-
-//        [HttpPost]
-//        [ValidateAntiForgeryToken]
-//        public IActionResult Delete(Category obj)
-//        {
-//            string connStr = _config.GetConnectionString("BULKY_DB");
-
-//            try
-//            {
-//                using SqlConnection conn = new SqlConnection(connStr);
-//                using SqlCommand cmd = new SqlCommand("proc_DeleteCategory", conn)
-//                {
-//                    CommandType = CommandType.StoredProcedure
-//                };
-
-//                cmd.Parameters.Add("@Id", SqlDbType.Int).Value = obj.Id;
-
-//                conn.Open();
-//                cmd.ExecuteNonQuery();
-//                TempData["success"] = "category deleted successfully";
-//                return RedirectToAction("Index");
-//            }
-//            catch (SqlException ex)
-//            {
-//                TempData["error"] = "Faild to delete category!";
-//                return Content("Database Error: " + ex.Message);
-//            }
-//        }
-//    }
-//}
-
-using Bulkybookweb.Models;
+﻿using Bulkybookweb.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace Bulkybookweb.Controllers
 {
+    [Authorize]
     public class CategoryController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -262,10 +16,28 @@ namespace Bulkybookweb.Controllers
             _context = context;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index(int page = 1)
         {
-            var categories = _context.Categories.OrderBy(c => c.DisplayOrder).ToList();
-            return View(categories);
+            if (page < 1) page = 1;
+            int pageSize = 5;
+            var query = _context.Categories.AsNoTracking();
+            var totalCategories = await query.CountAsync();
+            var totalPages = (int)Math.Ceiling(totalCategories / (double)pageSize);
+
+            if (totalPages < 1) totalPages = 1;
+            if (page > totalPages) page = totalPages;
+
+            var categoryList = await _context.Categories
+                    .Include(c => c.Creator) 
+                    .OrderBy(c => c.DisplayOrder)
+                    .Skip((page - 1) * pageSize)
+                    .Take(pageSize)
+                    .ToListAsync();
+
+            ViewBag.CurrentPage = page;
+            ViewBag.TotalPages = totalPages;
+
+            return View(categoryList);
         }
 
         [HttpGet]
@@ -285,7 +57,15 @@ namespace Bulkybookweb.Controllers
 
             if (ModelState.IsValid)
             {
-                obj.CreatedDateTime = DateTime.UtcNow;
+                obj.CategoryCode = Guid.NewGuid();
+                obj.CreatedDateTime = DateTime.Now;
+
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                if (!string.IsNullOrEmpty(userId))
+                {
+                    obj.CreatedBy = Guid.Parse(userId);
+                }
+
                 _context.Categories.Add(obj);
                 _context.SaveChanges();
                 TempData["success"] = "Category created successfully";
@@ -295,14 +75,21 @@ namespace Bulkybookweb.Controllers
         }
 
         [HttpGet]
-        public IActionResult Edit(int? id)
+        public IActionResult Edit(Guid? id)
         {
-            if (id == null || id == 0)
-                return NotFound();
+            if (id == null) return NotFound();
 
             var category = _context.Categories.Find(id);
-            if (category == null)
-                return NotFound();
+            if (category == null) return NotFound();
+
+            var loggedInUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            bool isPrivileged = User.IsInRole("Admin") || User.IsInRole("SuperAdmin");
+
+            if (!isPrivileged && category.CreatedBy.ToString() != loggedInUserId)
+            {
+                TempData["error"] = "Security Warning: You can only edit or delete your own category.";
+                return RedirectToAction("Index");
+            }
 
             return View(category);
         }
@@ -311,26 +98,42 @@ namespace Bulkybookweb.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(Category obj)
         {
-            if (obj.Name == obj.DisplayOrder.ToString())
+            // 1. Fetch the original record to verify existence and ownership
+            var existingCategory = _context.Categories.AsNoTracking()
+                .FirstOrDefault(u => u.CategoryCode == obj.CategoryCode);
+
+            if (existingCategory == null) return NotFound();
+
+            // 2. Security Check (Ownership/Admin)
+            var loggedInUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            bool isPrivileged = User.IsInRole("Admin") || User.IsInRole("SuperAdmin");
+            bool isOwner = existingCategory.CreatedBy.ToString() == loggedInUserId;
+
+            if (!isPrivileged && !isOwner)
             {
-                ModelState.AddModelError("Name", "The display order cannot exactly match name.");
+                TempData["error"] = "Access Denied: You can only edit your own category.";
+                return RedirectToAction("Index");
             }
 
             if (ModelState.IsValid)
             {
+                // 3. Restore the original audit data so it doesn't get wiped out
+                obj.CreatedBy = existingCategory.CreatedBy;
+                obj.CreatedDateTime = existingCategory.CreatedDateTime;
+
                 _context.Categories.Update(obj);
                 _context.SaveChanges();
-                TempData["success"] = "Category updated successfully";
+
+                TempData["success"] = "Update successful!";
                 return RedirectToAction("Index");
             }
-
             return View(obj);
         }
 
         [HttpGet]
-        public IActionResult Delete(int? id)
+        public IActionResult Delete(Guid? id) 
         {
-            if (id == null || id == 0)
+            if (id == null || id == Guid.Empty)
                 return NotFound();
 
             var category = _context.Categories.Find(id);
@@ -340,21 +143,25 @@ namespace Bulkybookweb.Controllers
             return View(category);
         }
 
-        [HttpPost]
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public IActionResult Delete(Category obj)
+        public IActionResult DeletePost(Guid? id)
         {
-            var category = _context.Categories.Find(obj.Id);
-            if (category != null)
+            var category = _context.Categories.Find(id);
+            if (category == null) return NotFound();
+
+            var loggedInUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            bool isPrivileged = User.IsInRole("Admin") || User.IsInRole("SuperAdmin");
+
+            if (!isPrivileged && category.CreatedBy.ToString() != loggedInUserId)
             {
-                _context.Categories.Remove(category);
-                _context.SaveChanges();
-                TempData["success"] = "Category deleted successfully";
+                TempData["error"] = "Access Denied: You cannot delete this category.";
+                return RedirectToAction("Index");
             }
-            else
-            {
-                TempData["error"] = "Category not found!";
-            }
+
+            _context.Categories.Remove(category);
+            _context.SaveChanges();
+            TempData["success"] = "Category deleted successfully";
             return RedirectToAction("Index");
         }
     }

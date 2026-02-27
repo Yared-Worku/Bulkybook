@@ -1,0 +1,127 @@
+﻿@model List<Bulkybookweb.Models.Users>
+@{
+    ViewData["Title"] = "System Users";
+}
+
+<div class="card category-card">
+    <div class="card-header category-header d-flex justify-content-between align-items-center rounded-top-4">
+        <div>
+        <span class="sidebar-icon">
+            <i class="bi bi-people"></i>
+            </span>
+        <span > User Management</span>
+        </div>
+        <a asp-controller="UserManagement"
+           asp-action="Create"
+           class="category-btn-create btn-sm fw-bold text-decoration-none">
+            <i class="bi bi-plus-circle me-2"></i> Add New
+        </a>
+    </div>
+
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table category-table table-hover align-middle">
+                <thead>
+                    <tr>
+                        <th>Full Name</th>
+                        <th>Email</th>
+                        <th>Created Date</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null && Model.Any())
+                    {
+                        @foreach (var user in Model)
+                        {
+                            <tr>
+                                <td class="fw-semibold">@user.FName @user.LName</td>
+                                <td>@user.Email</td>
+                                <td>@user.Created_date?.ToString("dd MMM yyyy")</td>
+                                <td class="text-center">
+                                    @if (user.Is_Active == true)
+                                    {
+                                        <span class="badge bg-success">Active</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-danger">Inactive</span>
+                                    }
+                                </td>
+                                <td class="text-center">
+
+
+                                    <div class="btn-group shadow-sm rounded-pill overflow-hidden">
+                                        <a asp-controller="UserManagement" asp-action="Edit" asp-route-id="@user.Id"
+                                           class="btn btn-outline-primary btn-sm px-3" title="Edit Role">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </a>
+
+                                        @if (user.Is_Active == true)
+                                        {
+                                            <a asp-action="Activation" asp-route-id="@user.Id"
+                                               class="btn btn-outline-danger btn-sm px-3 btn-status-deactivate">
+                                                <i class="bi bi-person-x-fill me-2"></i> Deactivate
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <a asp-action="Activation" asp-route-id="@user.Id"
+                                               class="btn btn-outline-danger btn-sm px-3 btn-status-activate">
+                                                <i class="bi bi-person-check-fill me-2"></i> Activate
+                                            </a>
+                                        }
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="5" class="text-center py-4 text-muted">No users found in the system.</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="d-flex justify-content-center mt-4 mb-3">
+            <nav aria-label="User navigation">
+                <ul class="pagination custom-pagination">
+
+                    <li class="page-item @(ViewBag.CurrentPage == 1 ? "disabled" : "")">
+                        <a class="page-link" asp-action="Index" asp-route-page="1">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+
+                    <li class="page-item @(ViewBag.CurrentPage == 1 ? "disabled" : "")">
+                        <a class="page-link" asp-action="Index" asp-route-page="@(ViewBag.CurrentPage - 1)">
+                            <span aria-hidden="true">&lsaquo;</span>
+                        </a>
+                    </li>
+
+                    @for (int i = 1; i <= ViewBag.TotalPages; i++)
+                    {
+                        <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")">
+                            <a class="page-link" asp-action="Index" asp-route-page="@i">@i</a>
+                        </li>
+                    }
+
+                    <li class="page-item @(ViewBag.CurrentPage == ViewBag.TotalPages ? "disabled" : "")">
+                        <a class="page-link" asp-action="Index" asp-route-page="@(ViewBag.CurrentPage + 1)">
+                            <span aria-hidden="true">&rsaquo;</span>
+                        </a>
+                    </li>
+
+                    <li class="page-item @(ViewBag.CurrentPage == ViewBag.TotalPages ? "disabled" : "")">
+                        <a class="page-link" asp-action="Index" asp-route-page="@ViewBag.TotalPages">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>

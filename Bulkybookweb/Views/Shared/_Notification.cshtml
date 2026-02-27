@@ -1,17 +1,27 @@
 ﻿@if (TempData["success"] != null)
 {
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            toastr.success("@TempData["success"]");
+        Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: '@TempData["success"]',
+            timer: 2500,
+            showConfirmButton: false
         });
     </script>
 }
 
 @if (TempData["error"] != null)
 {
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            toastr.error("@TempData["error"]");
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: '@TempData["error"]'
         });
     </script>
 }

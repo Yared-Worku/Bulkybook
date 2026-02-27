@@ -1,0 +1,60 @@
+﻿@model Bulkybookweb.Models.Users
+@{
+    ViewData["Title"] = "Update User Status";
+    // Check if we are activating or deactivating
+    bool isCurrentlyActive = Model.Is_Active ?? false;
+}
+
+<div class="container my-5 d-flex justify-content-center">
+    <div class="card shadow-lg border-0 rounded-4" style="max-width: 500px; width: 100%;">
+        <div class="card-header category-header d-flex justify-content-between align-items-center rounded-top-4">
+            <h4 class="mb-0 fw-bold">
+                👤 @(isCurrentlyActive ? "Deactivate User" : "Activate User")
+            </h4>
+        </div>
+
+        <div class="card-body p-4">
+            <form asp-action="Activation" method="post">
+                @Html.AntiForgeryToken()
+                <input type="hidden" asp-for="Id" />
+
+                <div class="text-center mb-4">
+                    <p class="fs-5">
+                        Are you sure you want to <strong>@(isCurrentlyActive ? "Deactivate" : "Re-activate")</strong>: <br />
+                        <span class="text-primary fw-bold">@Model.FName @Model.LName</span>?
+                    </p>
+                    <div class="p-3 bg-light rounded-3 border">
+                        <p class="text-muted mb-1"><strong>Email:</strong> @Model.Email</p>
+                        <p class="text-muted mb-0">
+                            <strong>Current Status:</strong>
+                            @if (isCurrentlyActive)
+                            {
+                                <span class="badge bg-success">Active</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-danger">Inactive</span>
+                            }
+                        </p>
+                    </div>
+                </div>
+
+                <div class="alert alert-info text-center py-2 mb-4" style="font-size: 0.85rem;">
+                    <i class="bi bi-info-circle"></i>
+                    @(isCurrentlyActive
+                                        ? "Deactivating revokes access but keeps history."
+                                        : "Activating will restore the user's ability to log in.")
+                </div>
+
+                <div class="d-flex justify-content-center gap-3">
+                    <a asp-action="Index" class="btn btn-outline-secondary px-4 py-2 fw-semibold rounded-pill">
+                        Cancel
+                    </a>
+                    <button type="submit" class="btn @(isCurrentlyActive ? "btn-warning" : "btn-success") px-4 py-2 fw-semibold rounded-pill">
+                       @(isCurrentlyActive ? "Deactivate" : "Activate")
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

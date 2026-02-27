@@ -1,0 +1,76 @@
+﻿@model Bulkybookweb.Models.Signup
+
+<div class="auth-container">
+    <div class="auth-card">
+        <div class="auth-header">
+            <h3 class="fw-bold mb-0">Create Account</h3>
+            <p class="small opacity-75">Join the system today</p>
+        </div>
+        <div class="auth-body">
+            <form asp-action="Register" method="post">
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger py-2 small mb-3 border-0 rounded-3">
+                    <i class="bi bi-exclamation-circle-fill me-2"></i>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-semibold small">First Name</label>
+                        <input asp-for="FName" class="form-control" placeholder="First Name" style="border-radius: 8px;" />
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-semibold small">Last Name</label>
+                        <input asp-for="LName" class="form-control" placeholder="Last Name" style="border-radius: 8px;" />
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-semibold small">Username</label>
+                    <div class="input-group auth-input-group">
+                        <span class="input-group-text"><i class="bi bi-person-badge"></i></span>
+                        <input asp-for="UserName" class="form-control auth-input" placeholder="Choose a unique username" />
+                    </div>
+                    <span asp-validation-for="UserName" class="text-danger small"></span>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-semibold small">Email Address</label>
+                    <div class="input-group auth-input-group">
+                        <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                        <input asp-for="Email" class="form-control auth-input" placeholder="john@example.com" />
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-semibold small">Phone Number</label>
+                    <div class="input-group auth-input-group">
+                        <span class="input-group-text"><i class="bi bi-phone"></i></span>
+                        <input asp-for="PhoneNumber" class="form-control auth-input" placeholder="+1 (555) 000-0000" />
+                    </div>
+                    <span asp-validation-for="PhoneNumber" class="text-danger small"></span>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-semibold small">Password</label>
+                    <div class="input-group auth-input-group">
+                        <span class="input-group-text"><i class="bi bi-shield-lock"></i></span>
+                        <input asp-for="Password" type="password" class="form-control auth-input" placeholder="Create a password" />
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label fw-semibold small">Confirm Password</label>
+                    <div class="input-group auth-input-group">
+                        <span class="input-group-text"><i class="bi bi-check2-circle"></i></span>
+                        <input asp-for="ConfirmPassword" type="password" class="form-control auth-input" placeholder="Repeat password" />
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-status-activate category-btn-status btn-auth text-white">
+                    Create Account <i class="bi bi-person-plus-fill ms-2"></i>
+                </button>
+
+                <div class="text-center mt-4">
+                    <p class="small text-muted">
+                        Already a member?
+                        <a asp-action="Login" class="text-primary fw-bold text-decoration-none">Sign In</a>
+                    </p>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,93 @@
+﻿@model Bulkybookweb.Models.Users
+@{
+    ViewData["Title"] = "Edit User";
+}
+
+<div class="container-fluid py-4">
+    <div class="row justify-content-center">
+        <div class="col-md-10 col-lg-8">
+            <div class="card shadow-lg border-0 rounded-4">
+
+                <div class="card-header category-header d-flex justify-content-between align-items-center rounded-top-4">
+                    <span>
+                        <i class="bi bi-pencil-square me-2"></i>Edit User Profile
+                    </span>                   
+                </div>
+
+                <div class="card-body p-4 p-md-5">
+                    <form asp-action="Edit" method="post" id="editForm" class="needs-validation">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger mb-4 border-0 rounded-3"></div>
+                        <input type="hidden" asp-for="Id" />
+
+                        <div class="row g-4">
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input asp-for="FName" class="form-control border-0 bg-light" placeholder="First Name" required />
+                                    <label asp-for="FName">First Name</label>
+                                    <span asp-validation-for="FName" class="text-danger small"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input asp-for="LName" class="form-control border-0 bg-light" placeholder="Last Name" required />
+                                    <label asp-for="LName">Last Name</label>
+                                    <span asp-validation-for="LName" class="text-danger small"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input asp-for="UserName" class="form-control border-0 bg-light" placeholder="Username" readonly />
+                                    <label asp-for="UserName">Username (Read-Only)</label>
+                                    <span asp-validation-for="UserName" class="text-danger small"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input asp-for="Email" type="email" class="form-control border-0 bg-light" placeholder="Email" required />
+                                    <label asp-for="Email">Email Address</label>
+                                    <span asp-validation-for="Email" class="text-danger small"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input asp-for="PhoneNumber" class="form-control border-0 bg-light" placeholder="Phone" />
+                                    <label asp-for="PhoneNumber">Phone Number</label>
+                                    <span asp-validation-for="PhoneNumber" class="text-danger small"></span>
+                                </div>
+                            </div>
+                            <div class="col-12 mt-4">
+                                <div class="alert alert-info border-0 rounded-3 bg-opacity-10 d-flex align-items-center">
+                                    <i class="bi bi-info-circle-fill me-3 fs-4"></i>
+                                    <div>
+                                        <small class="d-block fw-bold">Note:</small>
+                                        <small>Password management is handled separately for security.</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr class="my-5 opacity-10">
+
+                        <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-3">
+                            <a asp-action="Index" class="btn btn-outline-secondary px-4 py-2 rounded-pill transition">
+                                <i class="bi bi-arrow-left me-2"></i> Back to List
+                            </a>
+
+                            <button type="submit" class="btn btn-success px-5 py-2 rounded-pill shadow-sm bg-gradient transition fw-bold">
+                                <i class="bi bi-check-circle me-2"></i> Update 
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
