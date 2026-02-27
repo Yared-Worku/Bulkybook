@@ -393,7 +393,7 @@ nav[aria-label="User navigation"] {
     border-top-right-radius: 0 !important;
     border-bottom-right-radius: 0 !important;
 }
-/* Custom Emerald Gradient for Success Buttons */
+
 .btn-success.bg-gradient {
     background: linear-gradient(135deg, #198754 0%, #146c43 100%) !important;
     border: none !important;
@@ -408,7 +408,7 @@ nav[aria-label="User navigation"] {
 .btn-success.transition:active {
     transform: translateY(0);
 }
-/* Text and Badge Enhancements */
+
 .extra-small {
     font-size: 0.72rem;
     letter-spacing: 0.5px;
@@ -418,7 +418,6 @@ nav[aria-label="User navigation"] {
     font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
 }
 
-/* Row Hover Animation */
 .table-hover tbody tr {
     transition: background-color 0.2s ease;
 }
@@ -427,7 +426,6 @@ nav[aria-label="User navigation"] {
         background-color: rgba(0, 0, 0, 0.02);
     }
 
-/* Button Transitions */
 .transition {
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
@@ -437,7 +435,6 @@ nav[aria-label="User navigation"] {
         box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
     }
 
-/* Custom rounded pill for btn-group */
 .btn-group .btn:first-child {
     border-top-left-radius: 50rem !important;
     border-bottom-left-radius: 50rem !important;
@@ -447,8 +444,28 @@ nav[aria-label="User navigation"] {
     border-top-right-radius: 50rem !important;
     border-bottom-right-radius: 50rem !important;
 }
-/* Ensures the middle button doesn't have double borders */
+
 .btn-group .btn-outline-warning {
     border-left: none;
     border-right: none;
+}
+
+@media (max-width: 768px) {
+    #sidebar {
+        width: 65px; 
+    }
+
+    .sidebar-text {
+        display: none;
+    }
+
+    .auth-card {
+        margin: 10px;
+        max-width: 100%;
+    }
+
+    .category-table {
+        display: block;
+        overflow-x: auto; 
+    }
 }
