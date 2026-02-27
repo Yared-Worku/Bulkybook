@@ -452,7 +452,7 @@ nav[aria-label="User navigation"] {
 
 @media (max-width: 768px) {
     #sidebar {
-        width: 65px; 
+        width: 85px; 
     }
 
     .auth-card {
