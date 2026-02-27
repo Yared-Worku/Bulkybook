@@ -35,6 +35,7 @@ builder.Services.AddControllersWithViews(options =>
 //        options.UseNpgsql(connUrl);
 //    //}
 //});
+
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     var connUrl = builder.Configuration.GetConnectionString("BULKY_DB");
@@ -51,6 +52,12 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
     options.UseNpgsql(connUrl);
 });
+
+//builder.Services.AddDbContext<ApplicationDbContext>(options =>
+//{
+//    // We use a fake string just to satisfy the tool
+//    options.UseNpgsql("Host=localhost;Database=test;Username=test;Password=test");
+//});
 builder.Services.AddIdentity<Users, Roles>(options =>
 {
     options.Password.RequireDigit = false;
