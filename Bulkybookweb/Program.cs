@@ -23,17 +23,17 @@ builder.Services.AddControllersWithViews(options =>
 });
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
-    if (builder.Environment.IsDevelopment())
-    {
-        // SQL Server for local dev
-        options.UseSqlServer(builder.Configuration.GetConnectionString("BULKY_DB"));
-    }
-    else
-    {
+    //if (builder.Environment.IsDevelopment())
+    //{
+    //    // SQL Server for local dev
+    //    options.UseSqlServer(builder.Configuration.GetConnectionString("BULKY_DB"));
+    //}
+    //else
+    //{
         // Postgres for Render
         var connUrl = Environment.GetEnvironmentVariable("BULKY_DB");
         options.UseNpgsql(connUrl);
-    }
+    //}
 });
 builder.Services.AddIdentity<Users, Roles>(options =>
 {
