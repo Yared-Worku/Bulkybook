@@ -452,17 +452,30 @@ nav[aria-label="User navigation"] {
 
 @media (max-width: 768px) {
     #sidebar {
-        width: 85px; 
+        position: absolute;
+        z-index: 1000;
+        height: 100%;
+        left: -250px;
     }
 
-    .auth-card {
-        margin: 10px;
-        max-width: 100%;
+    .main-content {
+        width: 100% !important;
+        padding: 10px !important;
     }
 
-    .category-table {
-        display: block;
-        overflow-x: auto; 
-        max-width: 100%;
+    .category-card, .auth-card {
+        max-width: 95% !important;
+        margin: 10px auto !important;
+        padding: 15px !important;
+    }
+
+    .d-flex {
+        flex-direction: column !important;
+        gap: 10px;
+    }
+
+    .category-btn-back, .category-btn-create, .btn-auth {
+        width: 100% !important;
+        justify-content: center;
     }
 }
