@@ -508,3 +508,42 @@ nav[aria-label="User navigation"] {
         width: 100% !important;
     }
 }
+@media (max-width: 767px) {
+    /* 1. Remove padding from the body and main wrapper */
+    body, .wrapper, .main-content {
+        padding: 0 !important;
+        margin: 0 !important;
+        overflow-x: hidden; /* Prevent horizontal scrolling */
+    }
+
+    /* 2. Force the Bootstrap container to be fluid on mobile */
+    .container {
+        max-width: 100% !important;
+        width: 100% !important;
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+    }
+
+    /* 3. Expand the Cards to fill the space */
+    .auth-card, .category-card, .card {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin-top: 0 !important;
+        border-radius: 0 !important; /* Optional: square edges look more 'mobile' */
+        box-shadow: none !important; /* Optional: remove shadow to save space */
+    }
+
+    /* 4. Fix the Auth body padding */
+    .auth-body {
+        padding: 20px 15px !important;
+    }
+    .auth-container {
+        padding: 10px !important;
+        min-height: 70vh !important; /* Reduces vertical stretching on phones */
+    }
+
+    .auth-card {
+        border-radius: 12px !important; /* Keep a little curve so it looks nice */
+        margin: 10px auto !important;
+    }
+}

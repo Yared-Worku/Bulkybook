@@ -67,7 +67,7 @@
         </div>
     </nav>
 
-    <div class="wrapper">
+    <div class="wrapper flex-grow-1 d-flex">
         @if (User.Identity.IsAuthenticated)
         {
             <aside id="sidebar" class="shadow bg-dark">
@@ -98,12 +98,12 @@
         }
 
         <div class="main-content">
-            <main class="flex-fill p-1 p-md-4">
-                <div class="main-container bg-white p-2 p-md-4 rounded shadow-sm">
+            <div class="main-content w-100 d-flex flex-column">
+                <main role="main" class="pb-3 flex-grow-1 p-2 p-md-4">
                     <partial name="_Notification" />
                     @RenderBody()
-                </div>
             </main>
+            </div>
 
             <footer class="mt-auto py-4 bg-light border-top">
                 <div class="container text-center">
@@ -130,22 +130,15 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
     <script>
-        const sidebarToggle = document.getElementById('sidebarToggle');
-        if (sidebarToggle) {
-            sidebarToggle.addEventListener('click', function () {
-                const sidebar = document.getElementById('sidebar');
-                if (sidebar) {
-                    sidebar.classList.toggle('collapsed');
-                }
-            });
-        }
-            $(document).ready(function () {
+             $(document).ready(function () {
+            // Single toggle function
             $('#sidebarToggle').on('click', function (e) {
-                e.stopPropagation();
+                e.stopPropagation(); // Prevents the click from bubbling to the main-content
                 $('#sidebar').toggleClass('active');
+                $('#sidebar').toggleClass('collapsed'); // Use this if you still want the 'thin' look on desktop
             });
 
-            // Close sidebar if user clicks on the content area
+            // Close sidebar when clicking outside on mobile
             $('.main-content').on('click', function () {
                 if ($('#sidebar').hasClass('active')) {
                     $('#sidebar').removeClass('active');
