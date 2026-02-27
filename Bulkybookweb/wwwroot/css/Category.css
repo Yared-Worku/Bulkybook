@@ -449,43 +449,62 @@ nav[aria-label="User navigation"] {
     border-left: none;
     border-right: none;
 }
-
+/* Unified Mobile Fix */
 @media (max-width: 768px) {
-    #sidebar {
-        position: absolute;
-        z-index: 1000;
-        height: 100%;
-        left: -250px;
-    }
-
-    .main-content {
-        margin-left: 0 !important;
-        padding: 10px !important;
+    /* 1. Reset the wrapper so it doesn't try to fit the sidebar horizontally */
+    .wrapper {
+        display: block !important;
+        height: auto !important;
         width: 100% !important;
     }
 
+    /* 2. Move sidebar to an overlay position */
+    #sidebar {
+        position: fixed !important;
+        left: -250px;
+        height: 100vh !important;
+        z-index: 2000 !important; /* Ensure it's above everything */
+        transition: 0.3s;
+        display: block !important;
+    }
+
+        #sidebar.active {
+            left: 0 !important;
+        }
+
+    /* 3. THE KEY: Remove all margins/padding that "pinch" the content */
+    .main-content {
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+    }
+
+        /* Target the p-4 you have in your Layout */
+        .main-content main.p-4 {
+            padding: 10px !important; /* Reduces the gap from 24px to 10px */
+        }
+
+    .main-container {
+        margin: 0 !important;
+        padding: 15px !important; /* Room for the form, but no wasted space */
+        width: 100% !important;
+        border-radius: 0 !important;
+        box-shadow: none !important; /* Flat looks better on small screens */
+    }
+
+    /* 4. Make forms and buttons fill the card width */
     .category-card, .auth-card {
         max-width: 100% !important;
         width: 100% !important;
-        margin: 0 !important;
-        padding: 15px !important;
-        border-radius: 8px; 
-    }
-    .category-table {
-        display: block;
-        overflow-x: auto;
-        white-space: nowrap;
-    }
-    .d-flex {
-        flex-direction: column !important;
-        gap: 8px;
+        margin-top: 10px !important;
     }
 
-.category-btn-back, .category-btn-create, .btn-auth {
-        width: 100% !important;
+    .d-flex {
+        flex-direction: column !important;
+        gap: 10px !important;
     }
-    #sidebar.active {
-        left: 0;
-        box-shadow: 5px 0 15px rgba(0,0,0,0.5);
+
+    .category-btn-back, .category-btn-create, .btn-auth, .btn {
+        width: 100% !important;
     }
 }

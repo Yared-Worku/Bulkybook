@@ -98,8 +98,8 @@
         }
 
         <div class="main-content">
-            <main class="flex-fill p-4">
-                <div class="main-container bg-white p-4 rounded shadow-sm">
+            <main class="flex-fill p-1 p-md-4">
+                <div class="main-container bg-white p-2 p-md-4 rounded shadow-sm">
                     <partial name="_Notification" />
                     @RenderBody()
                 </div>
@@ -139,11 +139,13 @@
                 }
             });
         }
-                $(document).ready(function () {
-            $('#sidebarToggle').on('click', function () {
+            $(document).ready(function () {
+            $('#sidebarToggle').on('click', function (e) {
+                e.stopPropagation();
                 $('#sidebar').toggleClass('active');
             });
 
+            // Close sidebar if user clicks on the content area
             $('.main-content').on('click', function () {
                 if ($('#sidebar').hasClass('active')) {
                     $('#sidebar').removeClass('active');
