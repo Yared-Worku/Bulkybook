@@ -58,7 +58,7 @@ namespace Bulkybookweb.Controllers
             if (ModelState.IsValid)
             {
                 obj.CategoryCode = Guid.NewGuid();
-                obj.CreatedDateTime = DateTime.Now;
+                obj.CreatedDateTime = DateTime.UtcNow;
 
                 var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
                 if (!string.IsNullOrEmpty(userId))

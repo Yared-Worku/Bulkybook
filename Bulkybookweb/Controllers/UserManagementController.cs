@@ -63,7 +63,7 @@ namespace Bulkybookweb.Controllers
                     Email = email,
                     PhoneNumber = phoneNumber,
                     Is_Active = true,
-                    Created_date = DateTime.Now,
+                    Created_date = DateTime.UtcNow,
                     Created_by = currentUserId != null ? Guid.Parse(currentUserId) : Guid.Empty,
                 };
 

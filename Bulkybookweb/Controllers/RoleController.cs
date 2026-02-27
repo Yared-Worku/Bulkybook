@@ -24,7 +24,6 @@ namespace Bulkybookweb.Controllers
             if (page < 1) page = 1;
             int pageSize = 5;
 
-            // 1. Get the query and total count
             var query = _roleManager.Roles;
             var totalRoles = await query.CountAsync();
             var totalPages = (int)Math.Ceiling(totalRoles / (double)pageSize);
@@ -32,7 +31,6 @@ namespace Bulkybookweb.Controllers
             if (totalPages < 1) totalPages = 1;
             if (page > totalPages) page = totalPages;
 
-            // 2. Fetch the paged roles
             var roles = await query
                 .OrderBy(r => r.Name) 
                 .Skip((page - 1) * pageSize)
@@ -83,7 +81,7 @@ namespace Bulkybookweb.Controllers
                 role.Id = Guid.NewGuid();
                 role.Name = role.Name.Trim();
                 role.NormalizedName = role.Name.ToUpper();
-                role.Created_date = DateTime.Now;
+                role.Created_date = DateTime.UtcNow;
 
                 var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
                 if (!string.IsNullOrEmpty(currentUserId))

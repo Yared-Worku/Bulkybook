@@ -43,7 +43,7 @@ namespace Bulkybookweb.Controllers
                     PhoneNumber = model.PhoneNumber,
                     Is_Active = true,
                     Created_by = currentUserId != null ? Guid.Parse(currentUserId) : Guid.Empty,
-                    Created_date = DateTime.Now
+                    Created_date = DateTime.UtcNow
                 };
 
                 var result = await _userManager.CreateAsync(userObj, model.Password);
