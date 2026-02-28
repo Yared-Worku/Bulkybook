@@ -271,23 +271,21 @@
         width: 100% !important;
     }
     .category-card {
-        background: #ffffff;
-        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-        margin-top: 20px !important; 
+        margin-top: 20px !important;
+        border-radius: 0 !important;
     }
 
     .auth-card {
         margin-top: 50px !important;
-        background: #ffffff;
         border-radius: 16px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
     }
 
     .category-card, .auth-card, .card {
+        background: #ffffff;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
         width: 100% !important;
         max-width: 100% !important;
         padding: 10px 5px !important;
-        border-radius: 0 !important;
         box-shadow: none !important;
     }
 
