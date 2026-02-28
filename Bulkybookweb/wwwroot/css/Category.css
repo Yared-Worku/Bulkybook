@@ -277,12 +277,12 @@
         width: 100% !important;
     }
 
-    /* Expand cards to full width */
+    /* Expand cards to full width and reduce padding to maximize table space */
     .category-card, .auth-card, .card {
-        margin: 5px 0 !important;
+        margin: 0 !important;
         width: 100% !important;
         max-width: 100% !important;
-        padding: 15px !important;
+        padding: 10px 5px !important; /* CHANGED: Drastically reduced horizontal padding */
         border-radius: 0 !important;
         box-shadow: none !important;
     }
@@ -296,7 +296,7 @@
         min-height: 70vh !important;
     }
 
-    /* FIX: Force full-width ONLY on form/action buttons, save the pagination */
+    /* Target specific form inputs/buttons, but leave the Add New button alone */
     .category-form .row > div,
     .auth-body form > div {
         width: 100% !important;
@@ -305,12 +305,20 @@
         margin-bottom: 10px;
     }
 
-    .btn, .category-btn-create, .category-btn-back, .btn-auth {
+    /* CHANGED: Removed .category-btn-create from this block so it doesn't stretch 100% */
+    .category-form .btn, .category-btn-back, .btn-auth {
         width: 100% !important;
         display: block;
     }
 
-    /* FIX: Force pagination to center securely */
+    /* CHANGED: Re-align "Add New" button to normal auto width */
+    .category-btn-create {
+        width: auto !important;
+        display: inline-flex !important;
+        margin-bottom: 10px; /* Gives it breathing room above the table */
+    }
+
+    /* Force pagination to center securely */
     .pagination {
         display: flex !important;
         flex-direction: row !important;
@@ -325,11 +333,12 @@
             display: inline-block !important;
         }
 
-    .container {
+    /* Strip container constraints completely on mobile */
+    .container, .container-fluid {
         max-width: 100% !important;
         width: 100% !important;
-        padding-left: 10px !important;
-        padding-right: 10px !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
     }
 }
 
