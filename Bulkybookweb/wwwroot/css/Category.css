@@ -1,4 +1,38 @@
-﻿
+﻿/* --- Base Layout Structure --- */
+.wrapper {
+    display: flex;
+    width: 100%;
+    align-items: stretch;
+    min-height: calc(100vh - 56px);
+}
+
+#sidebar {
+    min-width: 250px;
+    max-width: 250px;
+    background-color: #212529;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+    z-index: 1000;
+}
+
+    #sidebar.active {
+        margin-left: -250px;
+    }
+
+    #sidebar.collapsed {
+        width: 65px;
+    }
+
+.main-content {
+    flex-grow: 1;
+    width: 100%;
+    background-color: #f8f9fa;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+}
+
+/* --- Category UI Styling --- */
 .category-card {
     background: #ffffff;
     padding: 25px;
@@ -6,6 +40,7 @@
     box-shadow: 0 8px 20px rgba(0,0,0,0.1);
     margin-top: 20px;
 }
+
 .category-header {
     background: linear-gradient(135deg, #4e73df, #e74a3b);
     color: #ffffff;
@@ -33,7 +68,9 @@
     }
 
     .category-table .badge {
-        font-size: 0.85rem;
+        font-size: 0.75rem;
+        padding: 4px 10px;
+        margin: 0;
     }
 
 .category-form .form-label {
@@ -48,9 +85,10 @@
     border-radius: 8px;
     font-weight: 600;
 }
+
 .category-btn-create {
-    background-color: #ffc107 !important; 
-    color: #212529 !important; 
+    background-color: #ffc107 !important;
+    color: #212529 !important;
     border: none !important;
     font-weight: 700 !important;
     padding: 8px 16px !important;
@@ -92,7 +130,7 @@
     border: none;
     text-decoration: none;
     transition: all 0.3s ease;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .category-btn-edit {
@@ -106,9 +144,10 @@
 }
 
 .btn-status-activate {
-    background-color: #198754; 
+    background-color: #198754;
     color: #ffffff !important;
 }
+
 .category-btn-edit:hover,
 .category-btn-status:hover {
     transform: translateY(-2px);
@@ -129,84 +168,11 @@
 
     .category-btn-delete:hover {
         background-color: #b02a37;
-        transform: translateY(-2px); 
+        transform: translateY(-2px);
         box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
     }
-.transition {
-    transition: all 0.3s ease;
-}
 
-.btn-outline-secondary.transition:hover {
-    background-color: #6c757d;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-}
-
-.btn-danger.transition:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-}
-
-.card.shadow-lg:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 12px 25px rgba(0,0,0,0.15);
-}
-.custom-pagination {
-    display: flex !important;
-    gap: 6px;
-    padding: 0;
-    list-style: none;
-}
-
-    .custom-pagination .page-link {
-        width: 36px;
-        height: 36px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background-color: #ffffff;
-        border: 1px solid #dee2e6 !important; 
-        color: #495057 !important;
-        font-size: 0.85rem;
-        font-weight: 500;
-        border-radius: 4px !important;
-        transition: all 0.2s ease;
-        box-shadow: 0 1px 2px rgba(0,0,0,0.05);
-        padding: 0;
-    }
-
-    .custom-pagination .page-item.active .page-link {
-        background-color: #007bff !important; 
-        border-color: #007bff !important;
-        color: #ffffff !important; 
-        z-index: 3;
-    }
-
-    .custom-pagination .page-link:hover {
-        background-color: #f8f9fa;
-        border-color: #c1c9d0 !important;
-        color: #007bff !important;
-    }
-
-    .custom-pagination .page-item.disabled .page-link {
-        color: #ced4da !important;
-        background-color: #ffffff;
-        border-color: #e9ecef !important;
-        pointer-events: none;
-        box-shadow: none;
-    }
-
-nav[aria-label="User navigation"] {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-}
-.category-table .badge {
-    font-size: 0.75rem;
-    padding: 4px 10px;
-    margin: 0;
-}
-
+/* --- Auth Styling --- */
 .auth-container {
     min-height: 80vh;
     display: flex;
@@ -236,27 +202,6 @@ nav[aria-label="User navigation"] {
     padding: 40px;
 }
 
-.form-floating > .form-control:focus {
-    border-color: #4e73df;
-    box-shadow: 0 0 0 0.25rem rgba(78, 115, 223, 0.1);
-}
-
-.input-group-text {
-    background-color: #f8f9fa;
-    border-right: none;
-    color: #4e73df;
-}
-
-.auth-input {
-    border-left: none;
-    border-radius: 0 8px 8px 0 !important;
-}
-
-.auth-input-group:focus-within .input-group-text {
-    border-color: #4e73df;
-    color: #224abe;
-}
-
 .btn-auth {
     width: 100%;
     height: 45px;
@@ -264,25 +209,7 @@ nav[aria-label="User navigation"] {
     margin-top: 10px;
 }
 
-.wrapper {
-    display: flex;
-    flex-grow: 1;
-    overflow: hidden;
-}
-
-#sidebar {
-    width: 250px;
-    background-color: #212529;
-    transition: all 0.3s ease-in-out;
-    display: flex;
-    flex-direction: column;
-    flex-shrink: 0;
-}
-
-    #sidebar.collapsed {
-        width: 65px;
-    }
-
+/* --- Sidebar Details --- */
 .sidebar-link {
     color: #adb5bd;
     text-decoration: none;
@@ -309,19 +236,7 @@ nav[aria-label="User navigation"] {
     display: none;
 }
 
-.main-content {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    overflow-y: auto;
-    background-color: #f8f9fa;
-}
-.wrapper {
-    display: flex;
-    flex: 1;
-    height: calc(100vh - 56px); 
-}
-
+/* --- Nav Avatar --- */
 .nav-avatar {
     width: 32px;
     height: 32px;
@@ -335,215 +250,77 @@ nav[aria-label="User navigation"] {
     font-size: 0.85rem;
 }
 
-.dropdown-toggle::after {
-    vertical-align: middle;
-    margin-left: 0.5rem;
+/* --- Table Scrolling --- */
+.category-table-container {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
-.user-dropdown-menu {
-    border: none;
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    margin-top: 10px !important;
-}
-
-.logout-btn-nav {
-    color: #dc3545 !important;
-    font-weight: 500;
-}
-
-    .logout-btn-nav:hover {
-        background-color: #fff5f5 !important;
-    }
-
-.form-floating > .form-control {
-    border-radius: 12px;
-    transition: all 0.2s ease-in-out;
-}
-
-    .form-floating > .form-control:focus {
-        background-color: #fff !important;
-        box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.15);
-        border: 1px solid #0d6efd;
-    }
-
-.transition {
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.btn.transition:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-}
-
-.bg-light {
-    background-color: #f8f9fa !important;
-}
-.input-group .form-floating {
-    flex: 1 1 auto;
-}
-
-.input-group .btn {
-    border-top-right-radius: 12px !important;
-    border-bottom-right-radius: 12px !important;
-    z-index: 4;
-}
-
-.form-floating > .form-control {
-    border-top-right-radius: 0 !important;
-    border-bottom-right-radius: 0 !important;
-}
-
-.btn-success.bg-gradient {
-    background: linear-gradient(135deg, #198754 0%, #146c43 100%) !important;
-    border: none !important;
-}
-
-.btn-success.transition:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 15px rgba(25, 135, 84, 0.3) !important;
-    filter: brightness(1.1);
-}
-
-.btn-success.transition:active {
-    transform: translateY(0);
-}
-
-.extra-small {
-    font-size: 0.72rem;
-    letter-spacing: 0.5px;
-}
-
-.font-monospace {
-    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
-}
-
-.table-hover tbody tr {
-    transition: background-color 0.2s ease;
-}
-
-    .table-hover tbody tr:hover {
-        background-color: rgba(0, 0, 0, 0.02);
-    }
-
-.transition {
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-    .transition:hover {
-        transform: translateY(-1px);
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
-    }
-
-.btn-group .btn:first-child {
-    border-top-left-radius: 50rem !important;
-    border-bottom-left-radius: 50rem !important;
-}
-
-.btn-group .btn:last-child {
-    border-top-right-radius: 50rem !important;
-    border-bottom-right-radius: 50rem !important;
-}
-
-.btn-group .btn-outline-warning {
-    border-left: none;
-    border-right: none;
-}
-/* Unified Mobile Fix */
+/* --- UNIFIED MOBILE OVERRIDE (CRITICAL FIX) --- */
 @media (max-width: 768px) {
-    /* 1. Reset the wrapper so it doesn't try to fit the sidebar horizontally */
-    .wrapper {
-        display: block !important;
-        height: auto !important;
-        width: 100% !important;
-    }
-
-    /* 2. Move sidebar to an overlay position */
     #sidebar {
-        position: fixed !important;
-        left: -250px;
-        height: 100vh !important;
-        z-index: 2000 !important; /* Ensure it's above everything */
-        transition: 0.3s;
-        display: block !important;
+        margin-left: -250px;
+        position: fixed;
+        height: 100%;
+        z-index: 2000;
     }
 
         #sidebar.active {
-            left: 0 !important;
+            margin-left: 0;
+            box-shadow: 5px 0 15px rgba(0,0,0,0.3);
         }
 
-    /* 3. THE KEY: Remove all margins/padding that "pinch" the content */
     .main-content {
-        margin: 0 !important;
+        margin-left: 0 !important;
         padding: 0 !important;
         width: 100% !important;
     }
 
-        /* Target the p-4 you have in your Layout */
-        .main-content main.p-4 {
-            padding: 10px !important; /* Reduces the gap from 24px to 10px */
-        }
-
-    .main-container {
-        margin: 0 !important;
-        padding: 15px !important; /* Room for the form, but no wasted space */
+    /* Expand cards to full width */
+    .category-card, .auth-card, .card {
+        margin: 5px 0 !important;
         width: 100% !important;
-        border-radius: 0 !important;
-        box-shadow: none !important; /* Flat looks better on small screens */
-    }
-
-    /* 4. Make forms and buttons fill the card width */
-    .category-card, .auth-card {
         max-width: 100% !important;
-        width: 100% !important;
-        margin-top: 10px !important;
+        padding: 15px !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
     }
 
-    .d-flex {
+    .auth-body {
+        padding: 20px 15px !important;
+    }
+
+    .auth-container {
+        padding: 10px !important;
+        min-height: 70vh !important;
+    }
+
+    /* Force full-width elements inside cards */
+    .d-flex:not(.navbar-brand):not(.nav-avatar) {
         flex-direction: column !important;
         gap: 10px !important;
     }
 
-    .category-btn-back, .category-btn-create, .btn-auth, .btn {
+    .btn, .category-btn-create, .category-btn-back, .btn-auth {
         width: 100% !important;
-    }
-}
-@media (max-width: 767px) {
-    /* 1. Remove padding from the body and main wrapper */
-    body, .wrapper, .main-content {
-        padding: 0 !important;
-        margin: 0 !important;
-        overflow-x: hidden; /* Prevent horizontal scrolling */
+        display: block;
     }
 
-    /* 2. Force the Bootstrap container to be fluid on mobile */
     .container {
         max-width: 100% !important;
         width: 100% !important;
         padding-left: 10px !important;
         padding-right: 10px !important;
     }
+}
 
-    /* 3. Expand the Cards to fill the space */
-    .auth-card, .category-card, .card {
-        width: 100% !important;
-        max-width: 100% !important;
-        margin-top: 0 !important;
-        border-radius: 0 !important; /* Optional: square edges look more 'mobile' */
-        box-shadow: none !important; /* Optional: remove shadow to save space */
-    }
+/* --- Utility Classes --- */
+.transition {
+    transition: all 0.3s ease;
+}
 
-    /* 4. Fix the Auth body padding */
-    .auth-body {
-        padding: 20px 15px !important;
-    }
-    .auth-container {
-        padding: 10px !important;
-        min-height: 70vh !important; /* Reduces vertical stretching on phones */
-    }
-
-    .auth-card {
-        border-radius: 12px !important; /* Keep a little curve so it looks nice */
-        margin: 10px auto !important;
-    }
+.card.shadow-lg:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.15);
 }
