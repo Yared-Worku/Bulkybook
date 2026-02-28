@@ -279,11 +279,11 @@
 
     /* Expand cards to full width and reduce padding to maximize table space */
     .category-card, .auth-card, .card {
-        margin: 0 !important;
+        margin-top: 20px !important;
         width: 100% !important;
         max-width: 100% !important;
         padding: 10px 5px !important; /* CHANGED: Drastically reduced horizontal padding */
-        border-radius: 0 !important;
+        border-radius: 16px !important;
         box-shadow: none !important;
     }
 
@@ -351,3 +351,17 @@
     transform: translateY(-3px);
     box-shadow: 0 12px 25px rgba(0,0,0,0.15);
 }
+/* Custom Logout Button Styling */
+.logout-btn-nav {
+    color: #dc3545 !important; /* Bootstrap Danger Red */
+    transition: all 0.2s ease;
+}
+
+    .logout-btn-nav:hover {
+        background-color: #fff5f5 !important; /* Very light red background on hover */
+        color: #a71d2a !important; /* Darker red on hover */
+    }
+
+    .logout-btn-nav i {
+        font-weight: bold;
+    }
