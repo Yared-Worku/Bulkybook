@@ -279,11 +279,11 @@
 
     /* Expand cards to full width and reduce padding to maximize table space */
     .category-card, .auth-card, .card {
-        margin-top: 20px !important;
+        margin-top: 100px !important;
         width: 100% !important;
         max-width: 100% !important;
         padding: 10px 5px !important; /* CHANGED: Drastically reduced horizontal padding */
-        border-radius: 16px !important;
+        border-radius: 0 !important;
         box-shadow: none !important;
     }
 
@@ -292,6 +292,7 @@
     }
 
     .auth-container {
+        border-radius: 16px;
         padding: 10px !important;
         min-height: 70vh !important;
     }
