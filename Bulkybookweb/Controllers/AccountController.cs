@@ -60,9 +60,9 @@ namespace Bulkybookweb.Controllers
                     {
                         await _userManager.AddToRoleAsync(userObj, "Customer");
                     }
-
-                    TempData["success"] = "Registration successful! Please sign in.";
-                    return RedirectToAction("Login");
+                    await _signInManager.SignInAsync(userObj, isPersistent: false);
+                    TempData["success"] = "Registration successful! Welcome.";
+                    return RedirectToAction("Index", "Category");
                 }
 
                 foreach (var error in result.Errors)
@@ -82,7 +82,7 @@ namespace Bulkybookweb.Controllers
         }
 
         [HttpPost]
-        [AllowAnonymous] 
+        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(Signin model, string? returnUrl = null)
         {

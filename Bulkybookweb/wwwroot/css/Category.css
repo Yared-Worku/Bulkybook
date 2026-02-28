@@ -324,3 +324,7 @@
     .logout-btn-nav i {
         font-weight: bold;
     }
+.text-danger.small {
+    display: block;
+    margin-top: 0.25rem;
+}

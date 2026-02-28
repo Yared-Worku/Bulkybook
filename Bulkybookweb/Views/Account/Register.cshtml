@@ -8,18 +8,19 @@
         </div>
         <div class="auth-body">
             <form asp-action="Register" method="post">
-                <div asp-validation-summary="ModelOnly" class="alert alert-danger py-2 small mb-3 border-0 rounded-3">
-                    <i class="bi bi-exclamation-circle-fill me-2"></i>
-                </div>
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label class="form-label fw-semibold small">First Name</label>
                         <input asp-for="FName" class="form-control" placeholder="First Name" style="border-radius: 8px;" />
+                        <span asp-validation-for="FName" class="text-danger small"></span>
                     </div>
+
                     <div class="col-md-6 mb-3">
                         <label class="form-label fw-semibold small">Last Name</label>
                         <input asp-for="LName" class="form-control" placeholder="Last Name" style="border-radius: 8px;" />
+                        <span asp-validation-for="LName" class="text-danger small"></span>
                     </div>
+                  
                 </div>
                 <div class="mb-3">
                     <label class="form-label fw-semibold small">Username</label>
@@ -35,6 +36,7 @@
                         <span class="input-group-text"><i class="bi bi-envelope"></i></span>
                         <input asp-for="Email" class="form-control auth-input" placeholder="john@example.com" />
                     </div>
+                    <span asp-validation-for="Email" class="text-danger small"></span>
                 </div>
                 <div class="mb-3">
                     <label class="form-label fw-semibold small">Phone Number</label>
@@ -50,6 +52,7 @@
                         <span class="input-group-text"><i class="bi bi-shield-lock"></i></span>
                         <input asp-for="Password" type="password" class="form-control auth-input" placeholder="Create a password" />
                     </div>
+                    <span asp-validation-for="Password" class="text-danger small"></span>
                 </div>
 
                 <div class="mb-4">
@@ -58,6 +61,7 @@
                         <span class="input-group-text"><i class="bi bi-check2-circle"></i></span>
                         <input asp-for="ConfirmPassword" type="password" class="form-control auth-input" placeholder="Repeat password" />
                     </div>
+                    <span asp-validation-for="ConfirmPassword" class="text-danger small"></span>
                 </div>
 
                 <button type="submit" class="btn-status-activate category-btn-status btn-auth text-white">
@@ -74,3 +78,8 @@
         </div>
     </div>
 </div>
+@section Scripts {
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}

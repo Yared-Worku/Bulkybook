@@ -64,22 +64,40 @@
                                         <span class="text-muted small italic">No users assigned</span>
                                     }
                                 </td>
+
                                 <td class="text-end pe-4">
+                                    @{
+                                        bool isSuperAdmin = role.RoleName == "SuperAdmin";
+                                    }
                                     <div class="btn-group shadow-sm rounded-pill overflow-hidden">
+                                        @if (isSuperAdmin)
+                                        {                            
                                         <a asp-action="ManageUserRoles" asp-route-id="@role.RoleId"
-                                           class="btn btn-outline-warning btn-sm px-3" title="Manage Users">
+                                               class="btn btn-outline-warning btn-sm px-3 border-0" title="Manage Users">
                                             <i class="bi bi-people-fill"></i>
                                         </a>
-
-                                        <a asp-controller="Role" asp-action="Edit" asp-route-id="@role.RoleId"
-                                           class="btn btn-outline-primary btn-sm px-3" title="Edit Role">
-                                            <i class="bi bi-pencil-square"></i>
-                                        </a>
-
-                                        <button type="button" class="btn btn-outline-danger btn-sm px-3"
-                                                onclick="confirmDelete('@role.RoleId')" title="Delete Role">
-                                            <i class="bi bi-trash3"></i>
-                                        </button>
+                                            <a class="btn btn-light btn-sm px-3 border-0 text-muted" title="System Core Role Protected" disabled>
+                                                <i class="bi bi-pencil-square"></i>
+                                            </a>
+                                            <button class="btn btn-light btn-sm px-3 border-0 text-muted" title="Cannot Delete System Core" disabled>
+                                                <i class="bi bi-trash3"></i>
+                                            </button>
+                                        }
+                                        else
+                                        {
+                                            <a asp-action="ManageUserRoles" asp-route-id="@role.RoleId"
+                                               class="btn btn-outline-warning btn-sm px-3 border-0" title="Manage Users">
+                                                <i class="bi bi-people-fill"></i>
+                                            </a>
+                                            <a asp-controller="Role" asp-action="Edit" asp-route-id="@role.RoleId"
+                                               class="btn btn-outline-primary btn-sm px-3 border-0" title="Edit Role">
+                                                <i class="bi bi-pencil-square"></i>
+                                            </a>
+                                            <button type="button" class="btn btn-outline-danger btn-sm px-3 border-0"
+                                                    onclick="confirmDelete('@role.RoleId')" title="Delete Role">
+                                                <i class="bi bi-trash3"></i>
+                                            </button>
+                                        }
                                     </div>
                                 </td>
                             </tr>
