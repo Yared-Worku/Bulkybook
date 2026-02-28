@@ -82,9 +82,14 @@ using (var scope = app.Services.CreateScope())
     try
     {
         var context = services.GetRequiredService<ApplicationDbContext>();
+        var roleManager = services.GetRequiredService<RoleManager<Roles>>();
         if (context.Database.GetPendingMigrations().Any())
         {
             context.Database.Migrate();
+        }
+        if (!await roleManager.RoleExistsAsync("SuperAdmin"))
+        {
+            await roleManager.CreateAsync(new Roles { Name = "SuperAdmin" });
         }
     }
     catch (Exception ex)

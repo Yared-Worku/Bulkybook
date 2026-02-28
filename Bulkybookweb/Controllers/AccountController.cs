@@ -26,12 +26,15 @@ namespace Bulkybookweb.Controllers
         }
 
         [HttpPost]
-        [AllowAnonymous] 
+        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(Signup model)
         {
             if (ModelState.IsValid)
             {
+                // Check if this is the first user in the system
+                bool isFirstUser = !await _userManager.Users.AnyAsync();
+
                 var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
                 var userObj = new Users
@@ -47,8 +50,15 @@ namespace Bulkybookweb.Controllers
                 };
 
                 var result = await _userManager.CreateAsync(userObj, model.Password);
+
                 if (result.Succeeded)
                 {
+                    // --- ASSIGN SUPERADMIN TO THE FIRST USER ---
+                    if (isFirstUser)
+                    {
+                        await _userManager.AddToRoleAsync(userObj, "SuperAdmin");
+                    }
+
                     TempData["success"] = "Registration successful! Please sign in.";
                     return RedirectToAction("Login");
                 }
