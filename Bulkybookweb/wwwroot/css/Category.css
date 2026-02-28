@@ -290,6 +290,7 @@
     }
 
     .auth-body {
+        border-radius: 16px;
         padding: 20px 15px !important;
     }
 
