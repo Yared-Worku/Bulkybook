@@ -1,4 +1,4 @@
-﻿/* --- Base Layout Structure --- */
+﻿
 .wrapper {
     display: flex;
     width: 100%;
@@ -32,7 +32,6 @@
     overflow-x: hidden;
 }
 
-/* --- Category UI Styling --- */
 .category-card {
     background: #ffffff;
     padding: 25px;
@@ -172,7 +171,6 @@
         box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
     }
 
-/* --- Auth Styling --- */
 .auth-container {
     min-height: 80vh;
     display: flex;
@@ -209,7 +207,6 @@
     margin-top: 10px;
 }
 
-/* --- Sidebar Details --- */
 .sidebar-link {
     color: #adb5bd;
     text-decoration: none;
@@ -236,7 +233,6 @@
     display: none;
 }
 
-/* --- Nav Avatar --- */
 .nav-avatar {
     width: 32px;
     height: 32px;
@@ -250,14 +246,12 @@
     font-size: 0.85rem;
 }
 
-/* --- Table Scrolling --- */
 .category-table-container {
     width: 100%;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
 }
 
-/* --- UNIFIED MOBILE OVERRIDE (CRITICAL FIX) --- */
 @media (max-width: 768px) {
     #sidebar {
         margin-left: -250px;
@@ -276,13 +270,23 @@
         padding: 0 !important;
         width: 100% !important;
     }
+    .category-card {
+        background: #ffffff;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        margin-top: 20px !important; 
+    }
 
-    /* Expand cards to full width and reduce padding to maximize table space */
+    .auth-card {
+        margin-top: 50px !important;
+        background: #ffffff;
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+
     .category-card, .auth-card, .card {
-        margin-top: 100px !important;
         width: 100% !important;
         max-width: 100% !important;
-        padding: 10px 5px !important; /* CHANGED: Drastically reduced horizontal padding */
+        padding: 10px 5px !important;
         border-radius: 0 !important;
         box-shadow: none !important;
     }
@@ -297,7 +301,6 @@
         min-height: 70vh !important;
     }
 
-    /* Target specific form inputs/buttons, but leave the Add New button alone */
     .category-form .row > div,
     .auth-body form > div {
         width: 100% !important;
@@ -306,20 +309,17 @@
         margin-bottom: 10px;
     }
 
-    /* CHANGED: Removed .category-btn-create from this block so it doesn't stretch 100% */
     .category-form .btn, .category-btn-back, .btn-auth {
         width: 100% !important;
         display: block;
     }
 
-    /* CHANGED: Re-align "Add New" button to normal auto width */
     .category-btn-create {
         width: auto !important;
         display: inline-flex !important;
-        margin-bottom: 10px; /* Gives it breathing room above the table */
+        margin-bottom: 10px; 
     }
 
-    /* Force pagination to center securely */
     .pagination {
         display: flex !important;
         flex-direction: row !important;
@@ -334,7 +334,6 @@
             display: inline-block !important;
         }
 
-    /* Strip container constraints completely on mobile */
     .container, .container-fluid {
         max-width: 100% !important;
         width: 100% !important;
@@ -343,7 +342,6 @@
     }
 }
 
-/* --- Utility Classes --- */
 .transition {
     transition: all 0.3s ease;
 }
@@ -352,15 +350,14 @@
     transform: translateY(-3px);
     box-shadow: 0 12px 25px rgba(0,0,0,0.15);
 }
-/* Custom Logout Button Styling */
 .logout-btn-nav {
-    color: #dc3545 !important; /* Bootstrap Danger Red */
+    color: #dc3545 !important;
     transition: all 0.2s ease;
 }
 
     .logout-btn-nav:hover {
-        background-color: #fff5f5 !important; /* Very light red background on hover */
-        color: #a71d2a !important; /* Darker red on hover */
+        background-color: #fff5f5 !important; 
+        color: #a71d2a !important;
     }
 
     .logout-btn-nav i {
