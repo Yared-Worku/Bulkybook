@@ -296,16 +296,34 @@
         min-height: 70vh !important;
     }
 
-    /* Force full-width elements inside cards */
-    .d-flex:not(.navbar-brand):not(.nav-avatar) {
-        flex-direction: column !important;
-        gap: 10px !important;
+    /* FIX: Force full-width ONLY on form/action buttons, save the pagination */
+    .category-form .row > div,
+    .auth-body form > div {
+        width: 100% !important;
+        flex: 0 0 100% !important;
+        max-width: 100% !important;
+        margin-bottom: 10px;
     }
 
     .btn, .category-btn-create, .category-btn-back, .btn-auth {
         width: 100% !important;
         display: block;
     }
+
+    /* FIX: Force pagination to center securely */
+    .pagination {
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: center !important;
+        flex-wrap: wrap !important;
+        width: 100% !important;
+        margin: 20px 0 !important;
+        padding: 0 !important;
+    }
+
+        .pagination .page-item {
+            display: inline-block !important;
+        }
 
     .container {
         max-width: 100% !important;

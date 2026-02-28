@@ -18,17 +18,18 @@
 <body class="d-flex flex-column min-vh-100">
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
-        <div class="container-fluid">
-            @if (User.Identity.IsAuthenticated)
-            {
-                <button class="btn btn-outline-light me-2 border-0" id="sidebarToggle">
-                    <i class="bi bi-list fs-4"></i>
-                </button>
-            }
-
-            <a class="navbar-brand me-auto" asp-controller="Home" asp-action="Index">
-                <i class="bi bi-book-half me-2"></i> Book Shelf
-            </a>
+        <div class="container-fluid flex-nowrap">
+            <div class="d-flex align-items-center me-auto">
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <button class="btn btn-outline-light me-2 border-0 px-2 py-1" id="sidebarToggle">
+                        <i class="bi bi-list fs-4"></i>
+                    </button>
+                }
+                <a class="navbar-brand m-0" asp-controller="Home" asp-action="Index">
+                    <i class="bi bi-book-half me-2"></i> <span class="d-none d-sm-inline">Book Shelf</span><span class="d-inline d-sm-none">Shelf</span>
+                </a>
+            </div>
 
             @if (User.Identity.IsAuthenticated)
             {
