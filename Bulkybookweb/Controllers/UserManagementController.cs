@@ -90,24 +90,36 @@ namespace Bulkybookweb.Controllers
             return View(user);
         }
 
-        [HttpPost, ActionName("Activation")] 
+        [HttpPost, ActionName("Activation")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ActivationConfirmed(Guid id) 
+        public async Task<IActionResult> ActivationConfirmed(Guid id)
         {
             var user = await _userManager.FindByIdAsync(id.ToString());
             if (user == null) return NotFound();
+
+          
+            if (await _userManager.IsInRoleAsync(user, "SuperAdmin"))
+            {
+               
+                TempData["error"] = "You cannot deactivate a System Admin.";
+                return RedirectToAction(nameof(Index));
+            }
+
+         
             user.Is_Active = !(user.Is_Active ?? false);
-            // Safety: Always refresh the security stamp when changing status
+
             await _userManager.UpdateSecurityStampAsync(user);
+
             var result = await _userManager.UpdateAsync(user);
             if (result.Succeeded)
             {
-                TempData["success"] = user.Is_Active == true ? "User Activated!" : "User Deactivated!";
+                TempData["success"] = (user.Is_Active == true) ? "User Activated!" : "User Deactivated!";
                 return RedirectToAction(nameof(Index));
             }
 
             return View(user);
         }
+
         [HttpGet]
         public async Task<IActionResult> Edit(Guid id)
         {
@@ -115,6 +127,12 @@ namespace Bulkybookweb.Controllers
 
             var user = await _userManager.FindByIdAsync(id.ToString());
             if (user == null) return NotFound();
+
+            if (await _userManager.IsInRoleAsync(user, "SuperAdmin"))
+            {
+                TempData["error"] = "System Admin details are protected and cannot be edited.";
+                return RedirectToAction(nameof(Index));
+            }
 
             return View(user);
         }
@@ -128,13 +146,19 @@ namespace Bulkybookweb.Controllers
                 var userFromDb = await _userManager.FindByIdAsync(model.Id.ToString());
                 if (userFromDb == null) return NotFound();
 
+                // Extra check: even if they bypass the UI, block the update if they are SuperAdmin
+                if (await _userManager.IsInRoleAsync(userFromDb, "SuperAdmin"))
+                {
+                    TempData["error"] = "Action Denied: System Admin protection.";
+                    return RedirectToAction(nameof(Index));
+                }
+
                 userFromDb.FName = model.FName;
                 userFromDb.LName = model.LName;
                 userFromDb.Email = model.Email;
                 userFromDb.PhoneNumber = model.PhoneNumber;
 
                 var result = await _userManager.UpdateAsync(userFromDb);
-
                 if (result.Succeeded)
                 {
                     TempData["success"] = "User updated successfully.";

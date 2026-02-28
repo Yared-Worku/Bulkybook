@@ -270,7 +270,6 @@
         width: 100% !important;
     }
 
-    /* --- Category View (Full Width) --- */
     .category-card {
         margin-top: 20px !important;
         width: 100% !important;
@@ -279,16 +278,15 @@
         padding: 10px 5px !important;
     }
 
-    /* --- Auth View (Like Desktop: Floating & Rounded) --- */
     .auth-card {
-        margin-top: 60px !important; /* Space from top */
-        width: 92% !important; /* Small gap on sides to show rounding */
+        margin-top: 60px !important; 
+        width: 92% !important; 
         max-width: 400px !important;
         margin-left: auto !important;
         margin-right: auto !important;
         border-radius: 16px !important;
-        overflow: hidden !important; /* Clips the blue header to the curve */
-        box-shadow: 0 8px 20px rgba(0,0,0,0.15) !important; /* Keeps the 'floating' look */
+        overflow: hidden !important; 
+        box-shadow: 0 8px 20px rgba(0,0,0,0.15) !important; 
     }
 
     .auth-body {
@@ -299,7 +297,6 @@
         width: 100% !important;
     }
 
-    /* --- Utilities --- */
     .pagination {
         display: flex !important;
         justify-content: center !important;

@@ -91,6 +91,10 @@ using (var scope = app.Services.CreateScope())
         {
             await roleManager.CreateAsync(new Roles { Name = "SuperAdmin" });
         }
+        if (!await roleManager.RoleExistsAsync("Customer"))
+        {
+            await roleManager.CreateAsync(new Roles { Name = "Customer" });
+        }
     }
     catch (Exception ex)
     {

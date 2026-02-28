@@ -32,7 +32,6 @@ namespace Bulkybookweb.Controllers
         {
             if (ModelState.IsValid)
             {
-                // Check if this is the first user in the system
                 bool isFirstUser = !await _userManager.Users.AnyAsync();
 
                 var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -53,10 +52,13 @@ namespace Bulkybookweb.Controllers
 
                 if (result.Succeeded)
                 {
-                    // --- ASSIGN SUPERADMIN TO THE FIRST USER ---
                     if (isFirstUser)
                     {
                         await _userManager.AddToRoleAsync(userObj, "SuperAdmin");
+                    }
+                    else
+                    {
+                        await _userManager.AddToRoleAsync(userObj, "Customer");
                     }
 
                     TempData["success"] = "Registration successful! Please sign in.";

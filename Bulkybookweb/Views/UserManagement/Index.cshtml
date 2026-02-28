@@ -1,4 +1,6 @@
 ﻿@model List<Bulkybookweb.Models.Users>
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<Users> UserManager
 @{
     ViewData["Title"] = "System Users";
 }
@@ -50,27 +52,37 @@
                                     }
                                 </td>
                                 <td class="text-center">
-
-
                                     <div class="btn-group shadow-sm rounded-pill overflow-hidden">
-                                        <a asp-controller="UserManagement" asp-action="Edit" asp-route-id="@user.Id"
-                                           class="btn btn-outline-primary btn-sm px-3" title="Edit Role">
-                                            <i class="bi bi-pencil-square"></i>
-                                        </a>
 
-                                        @if (user.Is_Active == true)
+                                        @if (await UserManager.IsInRoleAsync(user, "SuperAdmin"))
                                         {
-                                            <a asp-action="Activation" asp-route-id="@user.Id"
-                                               class="btn btn-outline-danger btn-sm px-3 btn-status-deactivate">
-                                                <i class="bi bi-person-x-fill me-2"></i> Deactivate
-                                            </a>
+                                            <span class="btn btn-light btn-sm px-3 border-0 text-muted" title="System Admin Protected">
+                                                <i class="bi bi-shield-lock-fill"></i>
+                                            </span>
                                         }
                                         else
                                         {
-                                            <a asp-action="Activation" asp-route-id="@user.Id"
-                                               class="btn btn-outline-danger btn-sm px-3 btn-status-activate">
-                                                <i class="bi bi-person-check-fill me-2"></i> Activate
+                                            <a asp-controller="UserManagement" asp-action="Edit" asp-route-id="@user.Id"
+                                               class="btn btn-outline-primary btn-sm px-3 border-0" title="Edit User/Role">
+                                                <i class="bi bi-pencil-square"></i>
                                             </a>
+                                        }
+                                        @if (!(await UserManager.IsInRoleAsync(user, "SuperAdmin")))
+                                        {
+                                            <form asp-action="Activation" asp-route-id="@user.Id" method="post" style="display:inline;">
+                                                @if (user.Is_Active == true)
+                                                {
+                                                    <button type="submit" class="btn btn-outline-danger btn-sm px-3 border-0" title="Deactivate">
+                                                        <i class="bi bi-person-x-fill"></i>
+                                                    </button>
+                                                }
+                                                else
+                                                {
+                                                    <button type="submit" class="btn btn-outline-success btn-sm px-3 border-0" title="Activate">
+                                                        <i class="bi bi-person-check-fill"></i>
+                                                    </button>
+                                                }
+                                            </form>
                                         }
                                     </div>
                                 </td>
