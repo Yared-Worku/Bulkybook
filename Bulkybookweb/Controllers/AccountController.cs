@@ -148,21 +148,28 @@ namespace Bulkybookweb.Controllers
             if (ModelState.IsValid)
             {
                 var user = await _userManager.FindByEmailAsync(model.Email);
-                if (user == null)
-                {
-                    // For security, don't reveal that the user doesn't exist
-                    return RedirectToAction("ForgotPasswordConfirmation");
-                }
+
+                // Even if user is null, we usually redirect to confirmation 
+                // to prevent "email harvesting" (security best practice)
+                if (user == null) return RedirectToAction("ForgotPasswordConfirmation");
 
                 var token = await _userManager.GeneratePasswordResetTokenAsync(user);
                 var callbackUrl = Url.Action("ResetPassword", "Account",
                     new { token, email = model.Email }, Request.Scheme);
 
-                await _emailSender.SendEmailAsync(model.Email, "Reset Password - Book Shelf",
-            $"Please reset your password by <a href='{callbackUrl}'>clicking here</a>.");
-                TempData["ResetLink"] = callbackUrl;
+                try
+                {
+                    await _emailSender.SendEmailAsync(model.Email, "Reset Password",
+                        $"Please reset your password by <a href='{callbackUrl}'>clicking here</a>.");
 
-                return RedirectToAction("ForgotPasswordConfirmation");
+                    return RedirectToAction("ForgotPasswordConfirmation");
+                }
+                catch (Exception ex)
+                {
+                  
+                    ModelState.AddModelError(string.Empty, "Email provider error: " + ex.Message);
+                    return View(model);
+                }
             }
             return View(model);
         }
@@ -171,7 +178,6 @@ namespace Bulkybookweb.Controllers
         [AllowAnonymous]
         public IActionResult ForgotPasswordConfirmation() => View();
 
-        // GET: Account/ResetPassword
         [HttpGet]
         [AllowAnonymous]
         public IActionResult ResetPassword(string token = null, string email = null)
@@ -180,7 +186,6 @@ namespace Bulkybookweb.Controllers
             return View(new ResetPasswordViewModel { Token = token, Email = email });
         }
 
-        // POST: Account/ResetPassword
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
