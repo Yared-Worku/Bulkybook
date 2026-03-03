@@ -33,13 +33,18 @@ namespace Bulkybookweb.Services
                 client.Timeout = 10000; // 10 seconds
 
                 // Explicitly use StartTls for port 587
+                Console.WriteLine($"Attempting to connect to {smtpServer} on port {port}...");
                 await client.ConnectAsync(smtpServer, port, SecureSocketOptions.StartTls);
 
                 // Use the App Password generated from Google
+                Console.WriteLine($"Authenticating user: {senderEmail}...");
                 await client.AuthenticateAsync(senderEmail, password);
 
+                Console.WriteLine("Sending email...");
                 await client.SendAsync(emailMessage);
                 await client.DisconnectAsync(true);
+
+
             }
         }
     }
