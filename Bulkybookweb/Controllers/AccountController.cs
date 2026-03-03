@@ -1,6 +1,7 @@
 ﻿using Bulkybookweb.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
@@ -11,11 +12,13 @@ namespace Bulkybookweb.Controllers
     {
         private readonly UserManager<Users> _userManager;
         private readonly SignInManager<Users> _signInManager;
+        private readonly IEmailSender _emailSender;
 
-        public AccountController(UserManager<Users> userManager, SignInManager<Users> signInManager)
+        public AccountController(UserManager<Users> userManager, SignInManager<Users> signInManager, IEmailSender emailSender)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _emailSender = emailSender;
         }
 
         [HttpGet]
@@ -132,5 +135,73 @@ namespace Bulkybookweb.Controllers
         {
             return View();
         }
+
+        // GET: Account/ForgotPassword
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult ForgotPassword() => View();
+
+        // POST: Account/ForgotPassword
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.FindByEmailAsync(model.Email);
+                if (user == null)
+                {
+                    // For security, don't reveal that the user doesn't exist
+                    return RedirectToAction("ForgotPasswordConfirmation");
+                }
+
+                var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+                var callbackUrl = Url.Action("ResetPassword", "Account",
+                    new { token, email = model.Email }, Request.Scheme);
+
+                await _emailSender.SendEmailAsync(model.Email, "Reset Password - Book Shelf",
+            $"Please reset your password by <a href='{callbackUrl}'>clicking here</a>.");
+                TempData["ResetLink"] = callbackUrl;
+
+                return RedirectToAction("ForgotPasswordConfirmation");
+            }
+            return View(model);
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult ForgotPasswordConfirmation() => View();
+
+        // GET: Account/ResetPassword
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult ResetPassword(string token = null, string email = null)
+        {
+            if (token == null || email == null) return RedirectToAction("Login");
+            return View(new ResetPasswordViewModel { Token = token, Email = email });
+        }
+
+        // POST: Account/ResetPassword
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
+        {
+            if (!ModelState.IsValid) return View(model);
+
+            var user = await _userManager.FindByEmailAsync(model.Email);
+            if (user == null) return RedirectToAction("ResetPasswordConfirmation");
+
+            var result = await _userManager.ResetPasswordAsync(user, model.Token, model.Password);
+            if (result.Succeeded) return RedirectToAction("ResetPasswordConfirmation");
+
+            foreach (var error in result.Errors) ModelState.AddModelError(string.Empty, error.Description);
+            return View();
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult ResetPasswordConfirmation() => View();
     }
 }
