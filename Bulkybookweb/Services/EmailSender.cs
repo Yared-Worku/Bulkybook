@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.UI.Services;
-using MailKit.Net.Smtp; // Keep this
+using MailKit.Net.Smtp;
 using MimeKit;
-// Remove using System.Net.Mail; if it is there
+using MailKit.Security;
 
 namespace Bulkybookweb.Services
 {
@@ -12,12 +12,14 @@ namespace Bulkybookweb.Services
 
         public async Task SendEmailAsync(string email, string subject, string htmlMessage)
         {
-            var emailSettings = _config.GetSection("EmailSettings");
+            // Fetch settings with fallback to prevent null crashes
+            var smtpServer = _config["EmailSettings:SmtpServer"] ?? "smtp.gmail.com";
+            var senderEmail = _config["EmailSettings:Sender"] ?? "";
+            var password = _config["EmailSettings:Password"] ?? "";
+            // Use 587 as default for Render
+            var port = int.Parse(_config["EmailSettings:Port"] ?? "587");
+
             var emailMessage = new MimeMessage();
-
-            // Fix for the "Possible null reference" warning:
-            string senderEmail = emailSettings["Sender"] ?? "noreply@bulkybook.com";
-
             emailMessage.From.Add(new MailboxAddress("Book Shelf Support", senderEmail));
             emailMessage.To.Add(new MailboxAddress("", email));
             emailMessage.Subject = subject;
@@ -25,11 +27,17 @@ namespace Bulkybookweb.Services
             var bodyBuilder = new BodyBuilder { HtmlBody = htmlMessage };
             emailMessage.Body = bodyBuilder.ToMessageBody();
 
-            // EXPLICITLY use MailKit.Net.Smtp.SmtpClient here:
             using (var client = new MailKit.Net.Smtp.SmtpClient())
             {
-                await client.ConnectAsync(emailSettings["SmtpServer"], 587, MailKit.Security.SecureSocketOptions.StartTls);
-                await client.AuthenticateAsync(senderEmail, emailSettings["Password"]);
+                // ADDED: Timeout to prevent the "moment of loading" from lasting forever
+                client.Timeout = 10000; // 10 seconds
+
+                // Explicitly use StartTls for port 587
+                await client.ConnectAsync(smtpServer, port, SecureSocketOptions.StartTls);
+
+                // Use the App Password generated from Google
+                await client.AuthenticateAsync(senderEmail, password);
+
                 await client.SendAsync(emailMessage);
                 await client.DisconnectAsync(true);
             }
