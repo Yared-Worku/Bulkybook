@@ -136,12 +136,10 @@ namespace Bulkybookweb.Controllers
             return View();
         }
 
-        // GET: Account/ForgotPassword
         [HttpGet]
         [AllowAnonymous]
         public IActionResult ForgotPassword() => View();
 
-        // POST: Account/ForgotPassword
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
