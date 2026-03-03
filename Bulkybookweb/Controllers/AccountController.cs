@@ -166,7 +166,7 @@ namespace Bulkybookweb.Controllers
                 }
                 catch (Exception ex)
                 {
-                  
+                    Console.WriteLine($"ERROR: {ex.Message}");
                     ModelState.AddModelError(string.Empty, "Email provider error: " + ex.Message);
                     return View(model);
                 }
