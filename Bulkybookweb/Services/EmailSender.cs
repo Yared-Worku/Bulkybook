@@ -28,25 +28,27 @@ namespace Bulkybookweb.Services
             emailMessage.Body = bodyBuilder.ToMessageBody();
 
             using (var client = new MailKit.Net.Smtp.SmtpClient())
-
             {
+                // Increase timeout slightly for the cloud handshake
+                client.Timeout = 20000;
 
-                // ADDED: Timeout to prevent the "moment of loading" from lasting forever
-                client.Timeout = 10000; // 10 seconds
+                // Bypass SSL certificate issues that sometimes happen on shared cloud IPs
+                client.ServerCertificateValidationCallback = (s, c, h, e) => true;
 
-                // Explicitly use StartTls for port 587
                 Console.WriteLine($"Attempting to connect to {smtpServer} on port {port}...");
+
+                // Connect using StartTls (Port 2525 supports this too)
                 await client.ConnectAsync(smtpServer, port, SecureSocketOptions.StartTls);
 
-                // Use the App Password generated from Google
-                Console.WriteLine($"Authenticating user: {senderEmail}...");
-                await client.AuthenticateAsync(senderEmail, password);
+                Console.WriteLine($"Authenticating with SendGrid...");
+                // Remember: Username is literally "apikey", password is the SG.xxx key
+                await client.AuthenticateAsync("apikey", password);
 
                 Console.WriteLine("Sending email...");
                 await client.SendAsync(emailMessage);
+
                 await client.DisconnectAsync(true);
-
-
+                Console.WriteLine("Email sent successfully!");
             }
         }
     }
