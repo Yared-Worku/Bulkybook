@@ -28,7 +28,9 @@ namespace Bulkybookweb.Services
             emailMessage.Body = bodyBuilder.ToMessageBody();
 
             using (var client = new MailKit.Net.Smtp.SmtpClient())
+
             {
+
                 // ADDED: Timeout to prevent the "moment of loading" from lasting forever
                 client.Timeout = 10000; // 10 seconds
 
